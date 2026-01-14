@@ -1,0 +1,23 @@
+✅ All images have been successfully downloaded!
+
+Total Images: 40
+
+Breakdown:
+- User Images: 10 (5 instructors + 5 students)
+- Category Thumbnails: 10 (5 main + 5 sub-categories)
+- Course Thumbnails: 6
+- Blog Images: 10 (5 thumbnails + 5 banners)
+- Badge Images: 4
+
+All images are located in:
+- uploads/user_image/
+- uploads/thumbnails/
+- uploads/category_thumbnails/
+- uploads/blog/
+- uploads/badges/
+
+The demo_data.sql file is already configured with the correct image file names.
+You can now import the demo_data.sql file into your database.
+
+Note: These are placeholder images from picsum.photos (random stock photos).
+For better quality, topic-specific images, use the Python script with Unsplash API.

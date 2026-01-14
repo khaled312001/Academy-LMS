@@ -3,15 +3,23 @@
 -- ============================================
 -- This file contains comprehensive demo data for all tables
 -- Run this SQL file to populate your database with demo data
+-- 
+-- NOTE: This file uses INSERT IGNORE to prevent duplicate key errors.
+-- If records with the same IDs already exist, they will be skipped.
+-- To replace existing data, delete the records first or use REPLACE INTO.
 -- ============================================
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+-- Select the database
+-- Change 'lms' to your actual database name if different
+USE `lms`;
+
 -- ============================================
 -- USERS (Admins, Instructors, Students)
 -- ============================================
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `password`, `skills`, `social_links`, `biography`, `role_id`, `date_added`, `last_modified`, `wishlist`, `title`, `payment_keys`, `verification_code`, `status`, `is_instructor`, `image`, `temp`, `sessions`) VALUES
+INSERT IGNORE INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `password`, `skills`, `social_links`, `biography`, `role_id`, `date_added`, `last_modified`, `wishlist`, `title`, `payment_keys`, `verification_code`, `status`, `is_instructor`, `image`, `temp`, `sessions`) VALUES
 (2, 'John', 'Smith', 'john.smith@example.com', '+1-555-0101', '123 Main St, New York, NY', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '["Web Development", "JavaScript", "React"]', '{"facebook":"https://facebook.com/johnsmith","twitter":"https://twitter.com/johnsmith","linkedin":"https://linkedin.com/in/johnsmith"}', 'Experienced web developer with 10+ years of experience in modern web technologies.', 2, UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15'), '[]', 'Senior Web Developer', '', NULL, 1, 1, 'instructor_2.jpg', NULL, ''),
 (3, 'Sarah', 'Johnson', 'sarah.johnson@example.com', '+1-555-0102', '456 Oak Ave, Los Angeles, CA', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '["Data Science", "Python", "Machine Learning"]', '{"facebook":"https://facebook.com/sarahjohnson","twitter":"https://twitter.com/sarahjohnson","linkedin":"https://linkedin.com/in/sarahjohnson"}', 'Data scientist and AI researcher specializing in machine learning and deep learning.', 2, UNIX_TIMESTAMP('2024-01-16'), UNIX_TIMESTAMP('2024-01-16'), '[]', 'Data Science Expert', '', NULL, 1, 1, 'instructor_3.jpg', NULL, ''),
 (4, 'Michael', 'Brown', 'michael.brown@example.com', '+1-555-0103', '789 Pine Rd, Chicago, IL', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '["Graphic Design", "UI/UX", "Adobe Creative Suite"]', '{"facebook":"https://facebook.com/michaelbrown","twitter":"https://twitter.com/michaelbrown","linkedin":"https://linkedin.com/in/michaelbrown"}', 'Creative designer with expertise in UI/UX design and brand identity.', 2, UNIX_TIMESTAMP('2024-01-17'), UNIX_TIMESTAMP('2024-01-17'), '[]', 'Creative Director', '', NULL, 1, 1, 'instructor_4.jpg', NULL, ''),
@@ -26,7 +34,7 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `address
 -- ============================================
 -- CATEGORIES
 -- ============================================
-INSERT INTO `category` (`id`, `code`, `name`, `parent`, `slug`, `date_added`, `last_modified`, `font_awesome_class`, `thumbnail`, `sub_category_thumbnail`) VALUES
+INSERT IGNORE INTO `category` (`id`, `code`, `name`, `parent`, `slug`, `date_added`, `last_modified`, `font_awesome_class`, `thumbnail`, `sub_category_thumbnail`) VALUES
 (1, 'WEB', 'Web Development', 0, 'web-development', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-01-01'), 'fa-code', 'web-dev.jpg', 'web-dev-sub.jpg'),
 (2, 'DATA', 'Data Science', 0, 'data-science', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-01-01'), 'fa-chart-line', 'data-science.jpg', 'data-science-sub.jpg'),
 (3, 'DESIGN', 'Design', 0, 'design', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-01-01'), 'fa-palette', 'design.jpg', 'design-sub.jpg'),
@@ -39,7 +47,7 @@ INSERT INTO `category` (`id`, `code`, `name`, `parent`, `slug`, `date_added`, `l
 -- ============================================
 -- COURSES
 -- ============================================
-INSERT INTO `course` (`id`, `title`, `short_description`, `description`, `outcomes`, `faqs`, `language`, `category_id`, `sub_category_id`, `section`, `requirements`, `price`, `discount_flag`, `discounted_price`, `level`, `user_id`, `thumbnail`, `video_url`, `date_added`, `last_modified`, `course_type`, `is_top_course`, `is_admin`, `status`, `course_overview_provider`, `meta_keywords`, `meta_description`, `is_free_course`, `multi_instructor`, `enable_drip_content`, `creator`, `expiry_period`, `upcoming_image_thumbnail`, `publish_date`) VALUES
+INSERT IGNORE INTO `course` (`id`, `title`, `short_description`, `description`, `outcomes`, `faqs`, `language`, `category_id`, `sub_category_id`, `section`, `requirements`, `price`, `discount_flag`, `discounted_price`, `level`, `user_id`, `thumbnail`, `video_url`, `date_added`, `last_modified`, `course_type`, `is_top_course`, `is_admin`, `status`, `course_overview_provider`, `meta_keywords`, `meta_description`, `is_free_course`, `multi_instructor`, `enable_drip_content`, `creator`, `expiry_period`, `upcoming_image_thumbnail`, `publish_date`) VALUES
 (1, 'Complete Web Development Bootcamp', 'Master web development from scratch with HTML, CSS, JavaScript, and modern frameworks', '<p>This comprehensive course will take you from beginner to advanced web developer. You will learn HTML5, CSS3, JavaScript, React, Node.js, and much more. Build real-world projects and create a professional portfolio.</p>', '["Build responsive websites", "Create dynamic web applications", "Understand modern JavaScript", "Work with React and Node.js", "Deploy applications to production"]', '[{"question":"Do I need prior experience?","answer":"No, this course is designed for beginners."},{"question":"How long does it take?","answer":"Approximately 40 hours of content."}]', 'english', 1, 6, NULL, '["Basic computer skills", "Internet connection", "Willingness to learn"]', 99.99, 1, 79.99, 'beginner', '2', 'course_1.jpg', 'https://www.youtube.com/watch?v=demo1', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15'), 'general', 1, 0, 'active', 'youtube', 'web development, javascript, react, html, css', 'Learn web development from scratch with this comprehensive bootcamp', 0, 0, 0, 2, NULL, NULL, NULL),
 (2, 'Data Science with Python', 'Learn data science, machine learning, and data analysis using Python', '<p>This course covers everything you need to know about data science. Learn Python programming, data analysis with pandas, data visualization, machine learning algorithms, and more.</p>', '["Analyze data with Python", "Build machine learning models", "Create data visualizations", "Work with real datasets", "Deploy ML models"]', '[{"question":"What Python knowledge is required?","answer":"Basic Python knowledge is helpful but not required."},{"question":"Will I get a certificate?","answer":"Yes, upon completion you will receive a certificate."}]', 'english', 2, 7, NULL, '["Python basics (optional)", "Basic math knowledge", "Computer with Python installed"]', 129.99, 0, NULL, 'intermediate', '3', 'course_2.jpg', 'https://www.youtube.com/watch?v=demo2', UNIX_TIMESTAMP('2024-01-16'), UNIX_TIMESTAMP('2024-01-16'), 'general', 1, 0, 'active', 'youtube', 'data science, python, machine learning, pandas', 'Master data science with Python in this comprehensive course', 0, 0, 0, 3, NULL, NULL, NULL),
 (3, 'UI/UX Design Masterclass', 'Create beautiful and user-friendly interfaces with modern design principles', '<p>Learn the fundamentals of UI/UX design, user research, wireframing, prototyping, and design tools like Figma and Adobe XD. Create stunning interfaces that users love.</p>', '["Design user interfaces", "Conduct user research", "Create wireframes and prototypes", "Use design tools effectively", "Build a design portfolio"]', '[{"question":"Do I need design software?","answer":"We will use Figma which is free."},{"question":"Is this for beginners?","answer":"Yes, we start from the basics."}]', 'english', 3, 8, NULL, '["Computer", "Internet connection", "Figma account (free)"]', 89.99, 1, 69.99, 'beginner', '4', 'course_3.jpg', 'https://www.youtube.com/watch?v=demo3', UNIX_TIMESTAMP('2024-01-17'), UNIX_TIMESTAMP('2024-01-17'), 'general', 1, 0, 'active', 'youtube', 'ui design, ux design, figma, user interface', 'Master UI/UX design and create beautiful interfaces', 0, 0, 0, 4, NULL, NULL, NULL),
@@ -50,7 +58,7 @@ INSERT INTO `course` (`id`, `title`, `short_description`, `description`, `outcom
 -- ============================================
 -- SECTIONS
 -- ============================================
-INSERT INTO `section` (`id`, `title`, `course_id`, `start_date`, `end_date`, `restricted_by`, `order`) VALUES
+INSERT IGNORE INTO `section` (`id`, `title`, `course_id`, `start_date`, `end_date`, `restricted_by`, `order`) VALUES
 (1, 'Introduction to Web Development', 1, NULL, NULL, NULL, 1),
 (2, 'HTML & CSS Fundamentals', 1, NULL, NULL, NULL, 2),
 (3, 'JavaScript Basics', 1, NULL, NULL, NULL, 3),
@@ -65,7 +73,7 @@ INSERT INTO `section` (`id`, `title`, `course_id`, `start_date`, `end_date`, `re
 -- ============================================
 -- LESSONS
 -- ============================================
-INSERT INTO `lesson` (`id`, `title`, `duration`, `course_id`, `section_id`, `video_type`, `cloud_video_id`, `video_url`, `audio_url`, `date_added`, `last_modified`, `lesson_type`, `attachment`, `attachment_type`, `caption`, `summary`, `is_free`, `order`, `quiz_attempt`, `video_type_for_mobile_application`, `video_url_for_mobile_application`, `duration_for_mobile_application`) VALUES
+INSERT IGNORE INTO `lesson` (`id`, `title`, `duration`, `course_id`, `section_id`, `video_type`, `cloud_video_id`, `video_url`, `audio_url`, `date_added`, `last_modified`, `lesson_type`, `attachment`, `attachment_type`, `caption`, `summary`, `is_free`, `order`, `quiz_attempt`, `video_type_for_mobile_application`, `video_url_for_mobile_application`, `duration_for_mobile_application`) VALUES
 (1, 'Welcome to Web Development', '00:10:00', 1, 1, 'youtube', NULL, 'https://www.youtube.com/watch?v=lesson1', NULL, UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15'), 'video', NULL, NULL, NULL, 'Introduction to the course and what you will learn', 1, 1, 0, NULL, NULL, NULL),
 (2, 'Setting Up Your Development Environment', '00:15:00', 1, 1, 'youtube', NULL, 'https://www.youtube.com/watch?v=lesson2', NULL, UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15'), 'video', NULL, NULL, NULL, 'Learn how to set up your coding environment', 0, 2, 0, NULL, NULL, NULL),
 (3, 'HTML Basics', '00:20:00', 1, 2, 'youtube', NULL, 'https://www.youtube.com/watch?v=lesson3', NULL, UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15'), 'video', NULL, NULL, NULL, 'Introduction to HTML structure and tags', 1, 1, 0, NULL, NULL, NULL),
@@ -80,7 +88,7 @@ INSERT INTO `lesson` (`id`, `title`, `duration`, `course_id`, `section_id`, `vid
 -- ============================================
 -- ENROLLMENTS
 -- ============================================
-INSERT INTO `enrol` (`id`, `user_id`, `course_id`, `gifted_by`, `expiry_date`, `date_added`, `last_modified`) VALUES
+INSERT IGNORE INTO `enrol` (`id`, `user_id`, `course_id`, `gifted_by`, `expiry_date`, `date_added`, `last_modified`) VALUES
 (1, 7, 1, 0, NULL, UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-20')),
 (2, 7, 3, 0, NULL, UNIX_TIMESTAMP('2024-01-21'), UNIX_TIMESTAMP('2024-01-21')),
 (3, 8, 2, 0, NULL, UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-22')),
@@ -95,7 +103,7 @@ INSERT INTO `enrol` (`id`, `user_id`, `course_id`, `gifted_by`, `expiry_date`, `
 -- ============================================
 -- PAYMENTS
 -- ============================================
-INSERT INTO `payment` (`id`, `user_id`, `payment_type`, `course_id`, `amount`, `date_added`, `last_modified`, `admin_revenue`, `instructor_revenue`, `tax`, `instructor_payment_status`, `transaction_id`, `session_id`, `coupon`) VALUES
+INSERT IGNORE INTO `payment` (`id`, `user_id`, `payment_type`, `course_id`, `amount`, `date_added`, `last_modified`, `admin_revenue`, `instructor_revenue`, `tax`, `instructor_payment_status`, `transaction_id`, `session_id`, `coupon`) VALUES
 (1, 7, 'course', 1, 79.99, UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-20'), '24.00', '55.99', 0, 0, 'TXN001', 'SESS001', NULL),
 (2, 7, 'course', 3, 69.99, UNIX_TIMESTAMP('2024-01-21'), UNIX_TIMESTAMP('2024-01-21'), '21.00', '48.99', 0, 0, 'TXN002', 'SESS002', NULL),
 (3, 8, 'course', 2, 129.99, UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-22'), '39.00', '90.99', 0, 0, 'TXN003', 'SESS003', NULL),
@@ -110,7 +118,7 @@ INSERT INTO `payment` (`id`, `user_id`, `payment_type`, `course_id`, `amount`, `
 -- ============================================
 -- RATINGS & REVIEWS
 -- ============================================
-INSERT INTO `rating` (`id`, `rating`, `user_id`, `ratable_id`, `ratable_type`, `date_added`, `last_modified`, `review`) VALUES
+INSERT IGNORE INTO `rating` (`id`, `rating`, `user_id`, `ratable_id`, `ratable_type`, `date_added`, `last_modified`, `review`) VALUES
 (1, 5, 7, 1, 'course', UNIX_TIMESTAMP('2024-01-25'), UNIX_TIMESTAMP('2024-01-25'), 'Excellent course! Very comprehensive and well-structured. The instructor explains everything clearly.'),
 (2, 4, 8, 2, 'course', UNIX_TIMESTAMP('2024-01-26'), UNIX_TIMESTAMP('2024-01-26'), 'Great content and practical examples. Helped me understand data science concepts better.'),
 (3, 5, 9, 1, 'course', UNIX_TIMESTAMP('2024-01-27'), UNIX_TIMESTAMP('2024-01-27'), 'Best web development course I have taken. Highly recommended!'),
@@ -123,7 +131,7 @@ INSERT INTO `rating` (`id`, `rating`, `user_id`, `ratable_id`, `ratable_type`, `
 -- ============================================
 -- BLOG CATEGORIES
 -- ============================================
-INSERT INTO `blog_category` (`blog_category_id`, `title`, `subtitle`, `slug`, `added_date`) VALUES
+INSERT IGNORE INTO `blog_category` (`blog_category_id`, `title`, `subtitle`, `slug`, `added_date`) VALUES
 (1, 'Web Development', 'Latest trends and tutorials in web development', 'web-development', UNIX_TIMESTAMP('2024-01-01')),
 (2, 'Data Science', 'Insights and updates from the data science world', 'data-science', UNIX_TIMESTAMP('2024-01-01')),
 (3, 'Design', 'Design inspiration and best practices', 'design', UNIX_TIMESTAMP('2024-01-01')),
@@ -132,7 +140,7 @@ INSERT INTO `blog_category` (`blog_category_id`, `title`, `subtitle`, `slug`, `a
 -- ============================================
 -- BLOGS
 -- ============================================
-INSERT INTO `blogs` (`blog_id`, `blog_category_id`, `user_id`, `title`, `keywords`, `description`, `thumbnail`, `banner`, `is_popular`, `likes`, `added_date`, `updated_date`, `status`) VALUES
+INSERT IGNORE INTO `blogs` (`blog_id`, `blog_category_id`, `user_id`, `title`, `keywords`, `description`, `thumbnail`, `banner`, `is_popular`, `likes`, `added_date`, `updated_date`, `status`) VALUES
 (1, 1, 2, '10 JavaScript Tips Every Developer Should Know', 'javascript, web development, programming tips', '<p>JavaScript is one of the most popular programming languages today. Here are 10 essential tips that will help you write better JavaScript code and become a more efficient developer.</p>', 'blog_1_thumb.jpg', 'blog_1_banner.jpg', 1, '[]', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15'), 'active'),
 (2, 2, 3, 'Getting Started with Machine Learning', 'machine learning, data science, python, ai', '<p>Machine learning is transforming industries. Learn the basics of machine learning and how to get started with your first ML project using Python.</p>', 'blog_2_thumb.jpg', 'blog_2_banner.jpg', 1, '[]', UNIX_TIMESTAMP('2024-01-16'), UNIX_TIMESTAMP('2024-01-16'), 'active'),
 (3, 3, 4, 'Design Trends for 2024', 'design, ui/ux, trends, 2024', '<p>Discover the latest design trends that will shape user interfaces in 2024. From color schemes to typography, learn what is trending in the design world.</p>', 'blog_3_thumb.jpg', 'blog_3_banner.jpg', 0, '[]', UNIX_TIMESTAMP('2024-01-17'), UNIX_TIMESTAMP('2024-01-17'), 'active'),
@@ -142,7 +150,7 @@ INSERT INTO `blogs` (`blog_id`, `blog_category_id`, `user_id`, `title`, `keyword
 -- ============================================
 -- BLOG COMMENTS
 -- ============================================
-INSERT INTO `blog_comments` (`blog_comment_id`, `blog_id`, `user_id`, `parent_id`, `comment`, `likes`, `added_date`, `updated_date`) VALUES
+INSERT IGNORE INTO `blog_comments` (`blog_comment_id`, `blog_id`, `user_id`, `parent_id`, `comment`, `likes`, `added_date`, `updated_date`) VALUES
 (1, 1, 7, 0, 'Great tips! Especially the one about arrow functions. Thanks for sharing!', '[]', UNIX_TIMESTAMP('2024-01-16'), UNIX_TIMESTAMP('2024-01-16')),
 (2, 1, 8, 0, 'Very helpful article. I learned a lot from this.', '[]', UNIX_TIMESTAMP('2024-01-17'), UNIX_TIMESTAMP('2024-01-17')),
 (3, 2, 9, 0, 'Perfect introduction to ML. Looking forward to more content!', '[]', UNIX_TIMESTAMP('2024-01-17'), UNIX_TIMESTAMP('2024-01-17')),
@@ -152,7 +160,7 @@ INSERT INTO `blog_comments` (`blog_comment_id`, `blog_id`, `user_id`, `parent_id
 -- ============================================
 -- COUPONS
 -- ============================================
-INSERT INTO `coupons` (`id`, `code`, `discount_percentage`, `created_at`, `expiry_date`) VALUES
+INSERT IGNORE INTO `coupons` (`id`, `code`, `discount_percentage`, `created_at`, `expiry_date`) VALUES
 (1, 'WELCOME10', '10', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-12-31')),
 (2, 'SAVE20', '20', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-12-31')),
 (3, 'STUDENT50', '50', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-12-31')),
@@ -162,7 +170,7 @@ INSERT INTO `coupons` (`id`, `code`, `discount_percentage`, `created_at`, `expir
 -- ============================================
 -- APPLICATIONS (Instructor Applications)
 -- ============================================
-INSERT INTO `applications` (`id`, `user_id`, `address`, `phone`, `message`, `document`, `status`) VALUES
+INSERT IGNORE INTO `applications` (`id`, `user_id`, `address`, `phone`, `message`, `document`, `status`) VALUES
 (1, 7, '100 Student Ave, Boston, MA', '+1-555-0201', 'I would like to become an instructor and share my knowledge about web development.', 'application_1.pdf', 0),
 (2, 8, '200 Learner St, Seattle, WA', '+1-555-0202', 'I have experience in data science and would love to teach others.', 'application_2.pdf', 1),
 (3, 9, '300 Study Blvd, Miami, FL', '+1-555-0203', 'I am a professional designer and want to create design courses.', 'application_3.pdf', 0);
@@ -170,7 +178,7 @@ INSERT INTO `applications` (`id`, `user_id`, `address`, `phone`, `message`, `doc
 -- ============================================
 -- BADGES (Gamification)
 -- ============================================
-INSERT INTO `badges` (`id`, `type`, `title`, `image`, `condition_from`, `condition_to`, `description`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `badges` (`id`, `type`, `title`, `image`, `condition_from`, `condition_to`, `description`, `created_at`, `updated_at`) VALUES
 (1, 'course_completion', 'First Course Completed', 'badge_1.jpg', 1, 1, 'Complete your first course', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-01-01')),
 (2, 'course_completion', '5 Courses Master', 'badge_2.jpg', 5, 5, 'Complete 5 courses', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-01-01')),
 (3, 'course_completion', '10 Courses Expert', 'badge_3.jpg', 10, 10, 'Complete 10 courses', UNIX_TIMESTAMP('2024-01-01'), UNIX_TIMESTAMP('2024-01-01')),
@@ -179,7 +187,7 @@ INSERT INTO `badges` (`id`, `type`, `title`, `image`, `condition_from`, `conditi
 -- ============================================
 -- CONTACT MESSAGES
 -- ============================================
-INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `message`, `has_read`, `replied`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `contact` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `message`, `has_read`, `replied`, `created_at`, `updated_at`) VALUES
 (1, 'Alice', 'Johnson', 'alice@example.com', '+1-555-1001', '123 Contact St, New York, NY', 'I have a question about the web development course. Can you provide more details?', 1, 1, UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-21')),
 (2, 'Bob', 'Williams', 'bob@example.com', '+1-555-1002', '456 Inquiry Ave, Los Angeles, CA', 'I am interested in becoming an instructor. How can I apply?', 1, 0, UNIX_TIMESTAMP('2024-01-21'), UNIX_TIMESTAMP('2024-01-21')),
 (3, 'Carol', 'Miller', 'carol@example.com', '+1-555-1003', '789 Question Rd, Chicago, IL', 'Do you offer certificates upon course completion?', 0, 0, UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-22')),
@@ -188,7 +196,7 @@ INSERT INTO `contact` (`id`, `first_name`, `last_name`, `email`, `phone`, `addre
 -- ============================================
 -- NEWSLETTER SUBSCRIBERS
 -- ============================================
-INSERT INTO `newsletter_subscriber` (`id`, `email`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `newsletter_subscriber` (`id`, `email`, `created_at`, `updated_at`) VALUES
 (1, 'subscriber1@example.com', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
 (2, 'subscriber2@example.com', UNIX_TIMESTAMP('2024-01-16'), UNIX_TIMESTAMP('2024-01-16')),
 (3, 'subscriber3@example.com', UNIX_TIMESTAMP('2024-01-17'), UNIX_TIMESTAMP('2024-01-17')),
@@ -198,7 +206,7 @@ INSERT INTO `newsletter_subscriber` (`id`, `email`, `created_at`, `updated_at`) 
 -- ============================================
 -- NEWSLETTERS
 -- ============================================
-INSERT INTO `newsletters` (`id`, `subject`, `description`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `newsletters` (`id`, `subject`, `description`, `created_at`, `updated_at`) VALUES
 (1, 'Welcome to Our Learning Platform!', '<p>Thank you for joining our learning community. We are excited to have you here!</p>', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
 (2, 'New Courses Available This Month', '<p>Check out our latest courses on web development, data science, and design.</p>', UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-20')),
 (3, 'Special Discount: 30% Off All Courses', '<p>Don\'t miss our special promotion! Get 30% off on all courses this month.</p>', UNIX_TIMESTAMP('2024-01-25'), UNIX_TIMESTAMP('2024-01-25'));
@@ -206,7 +214,7 @@ INSERT INTO `newsletters` (`id`, `subject`, `description`, `created_at`, `update
 -- ============================================
 -- NOTIFICATIONS
 -- ============================================
-INSERT INTO `notifications` (`id`, `from_user`, `to_user`, `type`, `title`, `description`, `status`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `notifications` (`id`, `from_user`, `to_user`, `type`, `title`, `description`, `status`, `created_at`, `updated_at`) VALUES
 (1, NULL, 7, 'course_purchase', 'Course Purchase Confirmation', 'You have successfully purchased Complete Web Development Bootcamp', 0, UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-20')),
 (2, NULL, 8, 'course_purchase', 'Course Purchase Confirmation', 'You have successfully purchased Data Science with Python', 0, UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-22')),
 (3, 2, 7, 'course_completion', 'Course Completed!', 'Congratulations! You have completed Complete Web Development Bootcamp', 0, UNIX_TIMESTAMP('2024-01-25'), UNIX_TIMESTAMP('2024-01-25')),
@@ -216,7 +224,7 @@ INSERT INTO `notifications` (`id`, `from_user`, `to_user`, `type`, `title`, `des
 -- ============================================
 -- MESSAGE THREADS
 -- ============================================
-INSERT INTO `message_thread` (`message_thread_id`, `message_thread_code`, `sender`, `receiver`, `last_message_timestamp`) VALUES
+INSERT IGNORE INTO `message_thread` (`message_thread_id`, `message_thread_code`, `sender`, `receiver`, `last_message_timestamp`) VALUES
 (1, 'THREAD001', '2', '7', UNIX_TIMESTAMP('2024-01-21')),
 (2, 'THREAD002', '3', '8', UNIX_TIMESTAMP('2024-01-23')),
 (3, 'THREAD003', '7', '2', UNIX_TIMESTAMP('2024-01-22'));
@@ -224,7 +232,7 @@ INSERT INTO `message_thread` (`message_thread_id`, `message_thread_code`, `sende
 -- ============================================
 -- MESSAGES
 -- ============================================
-INSERT INTO `message` (`message_id`, `message_thread_code`, `message`, `sender`, `receiver`, `timestamp`, `read_status`) VALUES
+INSERT IGNORE INTO `message` (`message_id`, `message_thread_code`, `message`, `sender`, `receiver`, `timestamp`, `read_status`) VALUES
 (1, 'THREAD001', 'Hi! Welcome to the course. If you have any questions, feel free to ask.', 2, 7, UNIX_TIMESTAMP('2024-01-21'), 1),
 (2, 'THREAD001', 'Thank you! I am excited to start learning.', 7, 2, UNIX_TIMESTAMP('2024-01-21'), 1),
 (3, 'THREAD002', 'Hello! I have a question about the data science course.', 8, 3, UNIX_TIMESTAMP('2024-01-23'), 1),
@@ -234,7 +242,7 @@ INSERT INTO `message` (`message_id`, `message_thread_code`, `message`, `sender`,
 -- ============================================
 -- QUESTIONS (Quiz Questions)
 -- ============================================
-INSERT INTO `question` (`id`, `quiz_id`, `title`, `type`, `number_of_options`, `options`, `correct_answers`, `order`) VALUES
+INSERT IGNORE INTO `question` (`id`, `quiz_id`, `title`, `type`, `number_of_options`, `options`, `correct_answers`, `order`) VALUES
 (1, 1, 'What is the correct way to declare a variable in JavaScript?', 'single', 4, '["var x = 5;", "variable x = 5;", "x := 5;", "x = 5;"]', '["var x = 5;"]', 1),
 (2, 1, 'Which of the following are JavaScript data types?', 'multiple', 5, '["String", "Number", "Boolean", "Object", "Array"]', '["String", "Number", "Boolean", "Object"]', 2),
 (3, 2, 'What is the purpose of pandas in Python?', 'single', 4, '["Web development", "Data analysis", "Game development", "Mobile apps"]', '["Data analysis"]', 1),
@@ -243,14 +251,14 @@ INSERT INTO `question` (`id`, `quiz_id`, `title`, `type`, `number_of_options`, `
 -- ============================================
 -- QUIZ RESULTS
 -- ============================================
-INSERT INTO `quiz_results` (`quiz_result_id`, `quiz_id`, `user_id`, `user_answers`, `correct_answers`, `total_obtained_marks`, `date_added`, `date_updated`, `is_submitted`) VALUES
+INSERT IGNORE INTO `quiz_results` (`quiz_result_id`, `quiz_id`, `user_id`, `user_answers`, `correct_answers`, `total_obtained_marks`, `date_added`, `date_updated`, `is_submitted`) VALUES
 (1, 1, 7, '{"1":"var x = 5;","2":["String","Number","Boolean","Object"]}', '{"1":"var x = 5;","2":["String","Number","Boolean","Object"]}', 100, UNIX_TIMESTAMP('2024-01-25'), UNIX_TIMESTAMP('2024-01-25'), 1),
 (2, 2, 8, '{"3":"Data analysis","4":["scikit-learn","TensorFlow","NumPy"]}', '{"3":"Data analysis","4":["scikit-learn","TensorFlow","NumPy"]}', 100, UNIX_TIMESTAMP('2024-01-26'), UNIX_TIMESTAMP('2024-01-26'), 1);
 
 -- ============================================
 -- RESOURCE FILES
 -- ============================================
-INSERT INTO `resource_files` (`id`, `lesson_id`, `title`, `file_name`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `resource_files` (`id`, `lesson_id`, `title`, `file_name`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Course Introduction PDF', 'intro.pdf', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
 (2, 3, 'HTML Cheat Sheet', 'html-cheatsheet.pdf', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
 (3, 4, 'CSS Reference Guide', 'css-reference.pdf', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
@@ -260,7 +268,7 @@ INSERT INTO `resource_files` (`id`, `lesson_id`, `title`, `file_name`, `created_
 -- ============================================
 -- TAGS
 -- ============================================
-INSERT INTO `tag` (`id`, `tag`, `tagable_id`, `tagable_type`, `date_added`, `last_modified`) VALUES
+INSERT IGNORE INTO `tag` (`id`, `tag`, `tagable_id`, `tagable_type`, `date_added`, `last_modified`) VALUES
 (1, 'javascript', 1, 'course', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
 (2, 'web-development', 1, 'course', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
 (3, 'react', 1, 'course', UNIX_TIMESTAMP('2024-01-15'), UNIX_TIMESTAMP('2024-01-15')),
@@ -275,7 +283,7 @@ INSERT INTO `tag` (`id`, `tag`, `tagable_id`, `tagable_type`, `date_added`, `las
 -- ============================================
 -- COMMENTS
 -- ============================================
-INSERT INTO `comment` (`id`, `body`, `user_id`, `commentable_id`, `commentable_type`, `date_added`, `last_modified`) VALUES
+INSERT IGNORE INTO `comment` (`id`, `body`, `user_id`, `commentable_id`, `commentable_type`, `date_added`, `last_modified`) VALUES
 (1, 'Great course! Very well explained.', 7, 1, 'course', UNIX_TIMESTAMP('2024-01-25'), UNIX_TIMESTAMP('2024-01-25')),
 (2, 'I learned so much from this course. Highly recommended!', 8, 2, 'course', UNIX_TIMESTAMP('2024-01-26'), UNIX_TIMESTAMP('2024-01-26')),
 (3, 'The instructor is amazing. Clear explanations and great examples.', 9, 1, 'course', UNIX_TIMESTAMP('2024-01-27'), UNIX_TIMESTAMP('2024-01-27')),
@@ -284,7 +292,7 @@ INSERT INTO `comment` (`id`, `body`, `user_id`, `commentable_id`, `commentable_t
 -- ============================================
 -- WATCH HISTORIES
 -- ============================================
-INSERT INTO `watch_histories` (`watch_history_id`, `course_id`, `student_id`, `completed_lesson`, `course_progress`, `watching_lesson_id`, `quiz_result`, `completed_date`, `date_added`, `date_updated`) VALUES
+INSERT IGNORE INTO `watch_histories` (`watch_history_id`, `course_id`, `student_id`, `completed_lesson`, `course_progress`, `watching_lesson_id`, `quiz_result`, `completed_date`, `date_added`, `date_updated`) VALUES
 (1, 1, 7, '[1,2,3,4]', 40, 5, '[]', NULL, UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-25')),
 (2, 2, 8, '[6,7]', 30, 7, '[]', NULL, UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-26')),
 (3, 3, 10, '[8,9]', 25, 9, '[]', NULL, UNIX_TIMESTAMP('2024-01-27'), UNIX_TIMESTAMP('2024-01-28')),
@@ -293,7 +301,7 @@ INSERT INTO `watch_histories` (`watch_history_id`, `course_id`, `student_id`, `c
 -- ============================================
 -- WATCHED DURATION
 -- ============================================
-INSERT INTO `watched_duration` (`watched_id`, `watched_student_id`, `watched_course_id`, `watched_lesson_id`, `current_duration`, `watched_counter`) VALUES
+INSERT IGNORE INTO `watched_duration` (`watched_id`, `watched_student_id`, `watched_course_id`, `watched_lesson_id`, `current_duration`, `watched_counter`) VALUES
 (1, 7, 1, 1, 600, '{"1":600}'),
 (2, 7, 1, 2, 900, '{"2":900}'),
 (3, 7, 1, 3, 1200, '{"3":1200}'),
@@ -305,7 +313,7 @@ INSERT INTO `watched_duration` (`watched_id`, `watched_student_id`, `watched_cou
 -- ============================================
 -- INSTRUCTOR FOLLOWINGS
 -- ============================================
-INSERT INTO `instructor_followings` (`id`, `user_id`, `instructor_id`, `is_following`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `instructor_followings` (`id`, `user_id`, `instructor_id`, `is_following`, `created_at`, `updated_at`) VALUES
 (1, 7, 2, 1, UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-20')),
 (2, 8, 3, 1, UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-22')),
 (3, 9, 2, 1, UNIX_TIMESTAMP('2024-01-24'), UNIX_TIMESTAMP('2024-01-24')),
@@ -315,7 +323,7 @@ INSERT INTO `instructor_followings` (`id`, `user_id`, `instructor_id`, `is_follo
 -- ============================================
 -- PAYOUTS
 -- ============================================
-INSERT INTO `payout` (`id`, `user_id`, `payment_type`, `amount`, `date_added`, `last_modified`, `status`) VALUES
+INSERT IGNORE INTO `payout` (`id`, `user_id`, `payment_type`, `amount`, `date_added`, `last_modified`, `status`) VALUES
 (1, 2, 'paypal', 55.99, UNIX_TIMESTAMP('2024-02-01'), UNIX_TIMESTAMP('2024-02-01'), 1),
 (2, 2, 'paypal', 48.99, UNIX_TIMESTAMP('2024-02-01'), UNIX_TIMESTAMP('2024-02-01'), 1),
 (3, 3, 'stripe', 90.99, UNIX_TIMESTAMP('2024-02-01'), UNIX_TIMESTAMP('2024-02-01'), 0),
@@ -325,14 +333,14 @@ INSERT INTO `payout` (`id`, `user_id`, `payment_type`, `amount`, `date_added`, `
 -- ============================================
 -- CUSTOM PAGES
 -- ============================================
-INSERT INTO `custom_page` (`custom_page_id`, `page_title`, `page_content`, `page_url`, `button_title`, `button_position`, `status`) VALUES
+INSERT IGNORE INTO `custom_page` (`custom_page_id`, `page_title`, `page_content`, `page_url`, `button_title`, `button_position`, `status`) VALUES
 (1, 'About Our Platform', '<h2>Welcome to Our Learning Platform</h2><p>We are dedicated to providing high-quality online courses to help you achieve your learning goals.</p>', 'about-platform', 'Learn More', 'top', 1),
 (2, 'Success Stories', '<h2>Student Success Stories</h2><p>Read about how our students have transformed their careers through our courses.</p>', 'success-stories', 'View Stories', 'top', 1);
 
 -- ============================================
 -- BBB MEETINGS (BigBlueButton)
 -- ============================================
-INSERT INTO `bbb_meetings` (`id`, `course_id`, `meeting_id`, `moderator_pw`, `viewer_pw`, `instructions`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `bbb_meetings` (`id`, `course_id`, `meeting_id`, `moderator_pw`, `viewer_pw`, `instructions`, `created_at`, `updated_at`) VALUES
 (1, 1, 'meeting-001', 'mod123', 'view123', 'Join this live session to discuss web development topics.', UNIX_TIMESTAMP('2024-01-20'), UNIX_TIMESTAMP('2024-01-20')),
 (2, 2, 'meeting-002', 'mod456', 'view456', 'Live Q&A session for data science course students.', UNIX_TIMESTAMP('2024-01-22'), UNIX_TIMESTAMP('2024-01-22'));
 

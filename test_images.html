@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Test - Academy LMS</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .image-test { margin: 20px 0; border: 1px solid #ccc; padding: 10px; }
+        img { max-width: 300px; display: block; margin: 10px 0; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Image Access Test</h1>
+    
+    <h2>Course Images</h2>
+    <div class="image-test">
+        <h3>Course 1</h3>
+        <img src="uploads/thumbnails/course_thumbnails/course_thumbnail_default-new_1_1705276800.jpg" 
+             onerror="this.parentElement.innerHTML += '<p class=error>Failed to load</p>'" 
+             onload="this.parentElement.innerHTML += '<p class=success>Loaded successfully</p>'">
+        <p>URL: uploads/thumbnails/course_thumbnails/course_thumbnail_default-new_1_1705276800.jpg</p>
+    </div>
+    
+    <div class="image-test">
+        <h3>Course 2</h3>
+        <img src="uploads/thumbnails/course_thumbnails/course_thumbnail_default-new_2_1705363200.jpg" 
+             onerror="this.parentElement.innerHTML += '<p class=error>Failed to load</p>'" 
+             onload="this.parentElement.innerHTML += '<p class=success>Loaded successfully</p>'">
+        <p>URL: uploads/thumbnails/course_thumbnails/course_thumbnail_default-new_2_1705363200.jpg</p>
+    </div>
+    
+    <h2>Category Images</h2>
+    <div class="image-test">
+        <h3>Category 1 - Web Development</h3>
+        <img src="uploads/thumbnails/category_thumbnails/web-dev.jpg" 
+             onerror="this.parentElement.innerHTML += '<p class=error>Failed to load</p>'" 
+             onload="this.parentElement.innerHTML += '<p class=success>Loaded successfully</p>'">
+        <p>URL: uploads/thumbnails/category_thumbnails/web-dev.jpg</p>
+    </div>
+    
+    <div class="image-test">
+        <h3>Category 2 - Data Science</h3>
+        <img src="uploads/thumbnails/category_thumbnails/data-science.jpg" 
+             onerror="this.parentElement.innerHTML += '<p class=error>Failed to load</p>'" 
+             onload="this.parentElement.innerHTML += '<p class=success>Loaded successfully</p>'">
+        <p>URL: uploads/thumbnails/category_thumbnails/data-science.jpg</p>
+    </div>
+    
+    <h2>User Images</h2>
+    <div class="image-test">
+        <h3>Instructor 2</h3>
+        <img src="uploads/user_image/instructor_2.jpg" 
+             onerror="this.parentElement.innerHTML += '<p class=error>Failed to load</p>'" 
+             onload="this.parentElement.innerHTML += '<p class=success>Loaded successfully</p>'">
+        <p>URL: uploads/user_image/instructor_2.jpg</p>
+    </div>
+</body>
+</html>
