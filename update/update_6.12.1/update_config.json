@@ -1,0 +1,16 @@
+{
+    "require_version": "6.12",
+    "directory": [],
+    "sql_file": "",
+    "libraries": [],
+    "files": [
+        {
+            "root_directory": "update/update_6.12.1/application/controllers/Api.php",
+            "update_directory": "application/controllers/Api.php"
+        },
+        {
+            "root_directory": "update/update_6.12.1/application/models/Api_model.php",
+            "update_directory": "application/models/Api_model.php"
+        }
+    ]
+}

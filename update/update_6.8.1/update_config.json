@@ -1,0 +1,45 @@
+{
+    "require_version": "6.8",
+    "directory": [],
+    "sql_file": "",
+    "libraries": [],
+    "files": [
+        {
+            "root_directory": "update/update_6.8.1/application/models/Crud_model.php",
+            "update_directory": "application/models/Crud_model.php"
+        },
+        {
+            "root_directory": "update/update_6.8.1/application/views/backend/admin/course_add.php",
+            "update_directory": "application/views/backend/admin/course_add.php"
+        },
+        {
+            "root_directory": "update/update_6.8.1/application/views/backend/admin/course_edit.php",
+            "update_directory": "application/views/backend/admin/course_edit.php"
+        },
+        {
+            "root_directory": "update/update_6.8.1/assets/frontend/default-new/css/style.css",
+            "update_directory": "assets/frontend/default-new/css/style.css"
+        },
+        {
+            "root_directory": "update/update_6.8.1/assets/frontend/default-new/css/responsive.css",
+            "update_directory": "assets/frontend/default-new/css/responsive.css"
+        },
+        {
+            "root_directory": "update/update_6.8.1/application/views/frontend/default-new/home_1.php",
+            "update_directory": "application/views/frontend/default-new/home_1.php"
+        },
+
+        {
+            "root_directory": "update/update_6.8.1/assets/frontend/default-new/image/image_1.png",
+            "update_directory": "assets/frontend/default-new/image/image_1.png"
+        },
+        {
+            "root_directory": "update/update_6.8.1/uploads/thumbnails/course_thumbnails/placeholder.png",
+            "update_directory": "uploads/thumbnails/course_thumbnails/placeholder.png"
+        }
+
+        
+
+       
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "require_version": "6.12.1",
+    "directory": [],
+    "sql_file": "",
+    "libraries": [],
+    "files": [
+        {
+            "root_directory": "update/update_6.12.2/application/controllers/Home.php",
+            "update_directory": "application/controllers/Home.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/helpers/common_helper.php",
+            "update_directory": "application/helpers/common_helper.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/views/backend/admin/curriculum.php",
+            "update_directory": "application/views/backend/admin/curriculum.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/views/backend/user/curriculum.php",
+            "update_directory": "application/views/backend/user/curriculum.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/views/backend/user/navigation.php",
+            "update_directory": "application/views/backend/user/navigation.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/views/frontend/default-new/common_scripts.php",
+            "update_directory": "application/views/frontend/default-new/common_scripts.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/views/frontend/default-new/header_sm_device.php",
+            "update_directory": "application/views/frontend/default-new/header_sm_device.php"
+        },
+        {
+            "root_directory": "update/update_6.12.2/application/views/frontend/default-new/seo.php",
+            "update_directory": "application/views/frontend/default-new/seo.php"
+        }
+    ]
+}
