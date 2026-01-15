@@ -30,12 +30,18 @@ $password = $db_config['password'];
 $database = $db_config['database'];
 $dbdriver = $db_config['dbdriver'];
 
+// Force output buffering
+ob_start();
+
+echo "=== إصلاح اتجاه اللغة العربية ===\n";
+echo "=== Fixing Arabic Language Direction ===\n\n";
+
 // Connect to database
 if ($dbdriver === 'mysqli') {
     $conn = new mysqli($hostname, $username, $password, $database);
     
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("Connection failed: " . $conn->connect_error . "\n");
     }
     
     $conn->set_charset("utf8");
@@ -63,10 +69,10 @@ if ($dbdriver === 'mysqli') {
         $stmt->bind_param("s", $json_value);
         
         if ($stmt->execute()) {
-            echo "✓ تم تحديث اتجاه اللغة العربية إلى RTL بنجاح!<br>\n";
-            echo "✓ Arabic language direction has been updated to RTL successfully!<br><br>\n";
+            echo "✓ تم تحديث اتجاه اللغة العربية إلى RTL بنجاح!\n";
+            echo "✓ Arabic language direction has been updated to RTL successfully!\n\n";
         } else {
-            echo "✗ Error updating: " . $stmt->error . "<br>\n";
+            echo "✗ Error updating: " . $stmt->error . "\n";
         }
         
         $stmt->close();
@@ -77,26 +83,29 @@ if ($dbdriver === 'mysqli') {
         $stmt->bind_param("s", $json_value);
         
         if ($stmt->execute()) {
-            echo "✓ تم إنشاء إعداد اتجاه اللغة العربية إلى RTL بنجاح!<br>\n";
-            echo "✓ Arabic language direction setting has been created successfully!<br><br>\n";
+            echo "✓ تم إنشاء إعداد اتجاه اللغة العربية إلى RTL بنجاح!\n";
+            echo "✓ Arabic language direction setting has been created successfully!\n\n";
         } else {
-            echo "✗ Error inserting: " . $stmt->error . "<br>\n";
+            echo "✗ Error inserting: " . $stmt->error . "\n";
         }
         
         $stmt->close();
     }
     
-    echo "Current language directions:<br>\n";
-    echo "<pre>" . print_r($language_dirs, true) . "</pre>\n";
+    echo "Current language directions:\n";
+    echo print_r($language_dirs, true) . "\n";
     
     $conn->close();
 } else {
     die("Unsupported database driver: " . $dbdriver);
 }
 
-echo "<br><br><strong>ملاحظة:</strong> يمكنك أيضاً تعديل اتجاه اللغة من لوحة التحكم:<br>";
-echo "<strong>Note:</strong> You can also change language direction from admin panel:<br>";
-echo "Admin Panel → Language → Manage Language → Set Arabic to RTL<br><br>";
+echo "\n<strong>ملاحظة:</strong> يمكنك أيضاً تعديل اتجاه اللغة من لوحة التحكم:\n";
+echo "<strong>Note:</strong> You can also change language direction from admin panel:\n";
+echo "Admin Panel → Language → Manage Language → Set Arabic to RTL\n\n";
 
-echo "<br>يمكنك حذف هذا الملف الآن.<br>";
-echo "You can delete this file now.";
+echo "يمكنك حذف هذا الملف الآن.\n";
+echo "You can delete this file now.\n";
+
+// Flush output
+ob_end_flush();

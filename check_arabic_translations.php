@@ -45,6 +45,9 @@ if (!$arabic_json) {
     $arabic_json = [];
 }
 
+// Force output buffering
+ob_start();
+
 echo "=== فحص الترجمات العربية ===\n";
 echo "=== Checking Arabic Translations ===\n\n";
 
@@ -78,33 +81,49 @@ if (count($missing_keys) > 0 || count($empty_values) > 0) {
     echo "=== إضافة الترجمات المفقودة ===\n";
     echo "=== Adding Missing Translations ===\n\n";
     
+    $added_count = 0;
     foreach ($missing_keys as $key => $english_value) {
         // Use English text as placeholder (you should translate these)
         $arabic_json[$key] = $english_value;
-        echo "Added missing key: $key\n";
+        $added_count++;
+        if ($added_count <= 10) { // Show first 10 only
+            echo "Added missing key: $key\n";
+        }
+    }
+    if (count($missing_keys) > 10) {
+        echo "... and " . (count($missing_keys) - 10) . " more missing keys\n";
     }
     
+    $filled_count = 0;
     foreach ($empty_values as $key => $english_value) {
         // Use English text as placeholder if empty
         if (empty($arabic_json[$key])) {
             $arabic_json[$key] = $english_value;
-            echo "Filled empty value: $key\n";
+            $filled_count++;
+            if ($filled_count <= 10) { // Show first 10 only
+                echo "Filled empty value: $key\n";
+            }
         }
+    }
+    if (count($empty_values) > 10) {
+        echo "... and " . (count($empty_values) - 10) . " more empty values\n";
     }
     
     // Sort keys alphabetically for better organization
     ksort($arabic_json);
     
     // Save updated Arabic JSON with proper formatting
-    $json_output = json_encode($arabic_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    
-    // Ensure proper JSON formatting (single line format like English file)
-    // But keep it readable - use compact format
     $json_output = json_encode($arabic_json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    file_put_contents($arabic_file, $json_output);
-    
-    echo "\n✓ تم حفظ ملف اللغة العربية المحدث\n";
-    echo "✓ Arabic language file has been saved\n\n";
+    if (file_put_contents($arabic_file, $json_output)) {
+        echo "\n✓ تم حفظ ملف اللغة العربية المحدث\n";
+        echo "✓ Arabic language file has been saved\n\n";
+    } else {
+        echo "\n✗ خطأ في حفظ الملف\n";
+        echo "✗ Error saving file\n\n";
+    }
+} else {
+    echo "✓ جميع الترجمات موجودة! لا توجد مفاتيح مفقودة.\n";
+    echo "✓ All translations exist! No missing keys.\n\n";
 }
 
 // Update database if connection is available
@@ -175,3 +194,6 @@ echo "يرجى مراجعة الترجمات المضافة وترجمتها ب�
 echo "Please review the added translations and translate them properly.\n";
 echo "\nيمكنك حذف هذا الملف بعد الانتهاء.\n";
 echo "You can delete this file after completion.\n";
+
+// Flush output
+ob_end_flush();
