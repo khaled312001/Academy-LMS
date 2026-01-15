@@ -26,30 +26,48 @@ $dbdriver = $db_config['dbdriver'];
 $english_file = 'languages/english.json';
 $arabic_file = 'languages/arabic.json';
 
+echo "Checking files...\n";
+flush();
+
 if (!file_exists($english_file)) {
-    die("Error: English language file not found: $english_file\n");
+    die("ERROR: English language file not found: $english_file\n");
 }
 
 if (!file_exists($arabic_file)) {
-    die("Error: Arabic language file not found: $arabic_file\n");
+    die("ERROR: Arabic language file not found: $arabic_file\n");
 }
 
-$english_json = json_decode(file_get_contents($english_file), true);
-$arabic_json = json_decode(file_get_contents($arabic_file), true);
+echo "✓ Files found\n";
+flush();
+
+echo "Loading JSON files...\n";
+flush();
+
+$english_content = file_get_contents($english_file);
+$arabic_content = file_get_contents($arabic_file);
+
+$english_json = json_decode($english_content, true);
+$arabic_json = json_decode($arabic_content, true);
 
 if (!$english_json) {
-    die("Error: Failed to parse English JSON file\n");
+    $error = json_last_error_msg();
+    die("ERROR: Failed to parse English JSON file: $error\n");
 }
 
 if (!$arabic_json) {
     $arabic_json = [];
+    echo "Warning: Arabic JSON is empty or invalid, starting fresh\n";
+    flush();
 }
 
-// Force output buffering
-ob_start();
+// Force output immediately
+ini_set('output_buffering', 'off');
+ini_set('zlib.output_compression', false);
 
+// Start output
 echo "=== فحص الترجمات العربية ===\n";
 echo "=== Checking Arabic Translations ===\n\n";
+flush();
 
 $missing_keys = [];
 $empty_values = [];
@@ -127,13 +145,23 @@ if (count($missing_keys) > 0 || count($empty_values) > 0) {
 }
 
 // Update database if connection is available
+echo "\n=== تحديث قاعدة البيانات ===\n";
+echo "=== Updating Database ===\n\n";
+flush();
+
 if ($dbdriver === 'mysqli') {
+    echo "Connecting to database ($hostname/$database)...\n";
+    flush();
+    
     $conn = new mysqli($hostname, $username, $password, $database);
     
     if ($conn->connect_error) {
-        echo "Warning: Could not connect to database: " . $conn->connect_error . "\n";
+        echo "WARNING: Could not connect to database: " . $conn->connect_error . "\n";
         echo "Please update translations manually from admin panel.\n";
+        flush();
     } else {
+        echo "✓ Database connected\n";
+        flush();
         $conn->set_charset("utf8");
         
         echo "=== تحديث قاعدة البيانات ===\n";
@@ -195,5 +223,4 @@ echo "Please review the added translations and translate them properly.\n";
 echo "\nيمكنك حذف هذا الملف بعد الانتهاء.\n";
 echo "You can delete this file after completion.\n";
 
-// Flush output
-ob_end_flush();
+flush();

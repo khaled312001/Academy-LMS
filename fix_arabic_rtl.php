@@ -30,24 +30,40 @@ $password = $db_config['password'];
 $database = $db_config['database'];
 $dbdriver = $db_config['dbdriver'];
 
-// Force output buffering
-ob_start();
+// Force output immediately
+ini_set('output_buffering', 'off');
+ini_set('zlib.output_compression', false);
 
 echo "=== إصلاح اتجاه اللغة العربية ===\n";
 echo "=== Fixing Arabic Language Direction ===\n\n";
+flush();
+
+echo "Connecting to database...\n";
+echo "Host: $hostname, Database: $database\n";
+flush();
 
 // Connect to database
 if ($dbdriver === 'mysqli') {
     $conn = new mysqli($hostname, $username, $password, $database);
     
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error . "\n");
+        die("ERROR: Connection failed: " . $conn->connect_error . "\n");
     }
+    
+    echo "✓ Database connected\n";
+    flush();
     
     $conn->set_charset("utf8");
     
     // Get current language_dirs setting
+    echo "Checking language_dirs setting...\n";
+    flush();
+    
     $result = $conn->query("SELECT * FROM settings WHERE `key` = 'language_dirs'");
+    
+    if (!$result) {
+        die("ERROR: Query failed: " . $conn->error . "\n");
+    }
     
     // Default language directions
     $language_dirs = ['english' => 'ltr', 'arabic' => 'rtl', 'hindi' => 'rtl'];
@@ -107,5 +123,4 @@ echo "Admin Panel → Language → Manage Language → Set Arabic to RTL\n\n";
 echo "يمكنك حذف هذا الملف الآن.\n";
 echo "You can delete this file now.\n";
 
-// Flush output
-ob_end_flush();
+flush();
