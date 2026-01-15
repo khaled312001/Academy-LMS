@@ -1430,20 +1430,20 @@ content: url('../image/prev_arrow.png');
   margin-top: 160px;
 }
 .eStudent .student-body-2, .eStudent .student-body-1 {
-  transform: scaleX(-1);
+  direction: rtl;
 }
 .eStudent .student-body-2 .col-lg-8 ,
 .eStudent .student-body-1 .col-lg-8 {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .eStudent a {
-  float: left;
+  float: right;
 }
 .eStudent h1,
 .eStudent p {
-  text-align: left;
+  text-align: right;
 }
 .eFaq  h1::after {
   left: 0;
