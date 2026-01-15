@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'https://lms.itegypt.org/';
+$config['base_url'] = 'https://lms.khaledahmed.net/';
 
 /*
 |--------------------------------------------------------------------------
