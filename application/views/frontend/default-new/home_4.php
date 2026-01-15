@@ -132,7 +132,7 @@
         <?php $category_details = $this->crud_model->get_category_details_by_id($top_10_category['sub_category_id'])->row_array(); ?>
         <div class="col-lg-3 col-md-4 col-sm-6">
           <a class="category-item" href="<?php echo site_url('home/courses?category='.$category_details['slug']); ?>">
-            <div class="icon text-center" style="color: #<?php echo rand(100000, 999999); ?>">
+            <div class="icon text-center" style="color: #754FFE;">
               <i class="<?php echo $category_details['font_awesome_class']; ?>"></i>
             </div>
             <h3 class="info">

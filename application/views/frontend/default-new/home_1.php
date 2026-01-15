@@ -338,9 +338,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12 wow  animate__animated animate__fadeIn" data-wow-duration="1000" data-wow-delay="600">
                         <a href="<?php echo site_url('home/courses?category='.$category_details['slug']); ?>" class="category-product-body position-relative eCategory d-flex">
                         <?php
-                            // Generate random colors
-                            $textColor = '#' . rand(100000, 999999);
-                            // $bgColor = '#' . rand(100000, 999999);
+                            // Use predefined colors for better visibility
+                            $colors = ['#754FFE', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+                            $textColor = $colors[array_rand($colors)];
                             ?>
                              <?php if($category_details['sub_category_thumbnail']):?>
                                 <div class="cate-image">
