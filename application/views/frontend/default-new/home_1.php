@@ -333,22 +333,19 @@
         <div class="category-product mt-2 wow  animate__animated animate__fadeInUp opacityOnUp" data-wow-duration="1000" data-wow-delay="500">
             <div class="row justify-content-center">
                 <?php 
-                // جلب الفئات من قاعدة البيانات مباشرة مثل صفحة /admin/categories
+                // جلب الفئات الرئيسية من قاعدة البيانات مباشرة مثل صفحة /admin/categories
                 $all_categories = $this->crud_model->get_categories()->result_array();
                 $categories_with_courses = array();
                 
-                // جمع جميع الفئات الفرعية مع عدد الدورات لكل فئة
+                // حساب عدد الدورات لكل فئة رئيسية
                 foreach($all_categories as $main_category):
-                    $sub_categories = $this->crud_model->get_sub_categories($main_category['id']);
-                    foreach($sub_categories as $sub_category):
-                        $course_count = $this->crud_model->get_category_wise_courses($sub_category['id'])->num_rows();
-                        if($course_count > 0):
-                            $categories_with_courses[] = array(
-                                'category' => $sub_category,
-                                'course_number' => $course_count
-                            );
-                        endif;
-                    endforeach;
+                    $course_count = $this->crud_model->get_category_wise_courses($main_category['id'])->num_rows();
+                    if($course_count > 0):
+                        $categories_with_courses[] = array(
+                            'category' => $main_category,
+                            'course_number' => $course_count
+                        );
+                    endif;
                 endforeach;
                 
                 // ترتيب الفئات حسب عدد الدورات (من الأكثر إلى الأقل)
@@ -369,9 +366,9 @@
                             $colors = ['#754FFE', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
                             $textColor = $colors[array_rand($colors)];
                             ?>
-                             <?php if($category_details['sub_category_thumbnail']):?>
+                             <?php if($category_details['thumbnail']):?>
                                 <div class="cate-image">
-                                   <img src="<?php echo base_url('uploads/thumbnails/category_thumbnails/' .$category_details['sub_category_thumbnail']); ?>" alt="">
+                                   <img src="<?php echo base_url('uploads/thumbnails/category_thumbnails/' .$category_details['thumbnail']); ?>" alt="">
                                  </div>
                                <?php else:?>
                                 <div class="cate-icon"  style="color: <?php echo $textColor; ?>;">
