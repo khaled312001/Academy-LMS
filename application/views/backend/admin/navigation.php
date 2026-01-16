@@ -531,14 +531,14 @@ $status_wise_courses = $this->crud_model->get_status_wise_courses();
 			</li>
 		<?php endif; ?>
 
-		<?php if (has_permission('theme')) : ?>
+		<!-- <?php if (has_permission('theme')) : ?>
 			<li class="side-nav-item">
 				<a href="<?php echo site_url('admin/theme_settings'); ?>" class="side-nav-link <?php if ($page_name == 'theme_settings') echo 'active'; ?>">
 					<i class="dripicons-brush"></i>
 					<span><?php echo get_phrase('themes'); ?></span>
 				</a>
 			</li>
-		<?php endif; ?>
+		<?php endif; ?> -->
 
 
 		<?php if (has_permission('settings')) : ?>
