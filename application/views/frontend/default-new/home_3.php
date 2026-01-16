@@ -135,7 +135,19 @@
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <div class="category-product-body" onclick="redirectTo('<?php echo site_url('home/courses?category='.$category_details['slug']); ?>')">
                             <a href="<?php echo site_url('home/courses?category='.$category_details['slug']); ?>">
-                                <i class="<?php echo $category_details['font_awesome_class']; ?>"></i>
+                                <?php 
+                                $icon_class = $category_details['font_awesome_class'];
+                                if (!empty($icon_class)) {
+                                    if (!preg_match('/^(fa[srbld]?|fa-)/', $icon_class)) {
+                                        $icon_class = 'fa-solid fa-' . ltrim($icon_class, 'fa-');
+                                    } elseif (preg_match('/^fa-[a-z]/', $icon_class)) {
+                                        $icon_class = 'fa-solid ' . $icon_class;
+                                    }
+                                } else {
+                                    $icon_class = 'fa-solid fa-folder';
+                                }
+                                ?>
+                                <i class="<?php echo $icon_class; ?>"></i>
                             </a>
                             <h5><?php echo $category_details['name']; ?></h5>
                             <p><?php echo $top_10_category['course_number'].' '.site_phrase('Courses'); ?></p>
@@ -633,8 +645,22 @@
 
 <?php if(get_frontend_settings('top_instructor_section') == 1): ?>
 <!---------  Expert Instructor Start ---------------->
-<?php $top_instructor_ids = $this->crud_model->get_top_instructor(10); ?>
-<?php if(count($top_instructor_ids) > 0): ?>
+<?php 
+$top_instructor_ids = $this->crud_model->get_top_instructor(10); 
+// Filter out invalid instructors
+$valid_instructors = array();
+foreach($top_instructor_ids as $top_instructor_id):
+    $instructor_query = $this->user_model->get_all_user($top_instructor_id['creator']);
+    if($instructor_query->num_rows() > 0):
+        $top_instructor = $instructor_query->row_array();
+        // Check if instructor is valid and has required fields
+        if(!empty($top_instructor) && !empty($top_instructor['id']) && !empty($top_instructor['first_name'])):
+            $valid_instructors[] = $top_instructor;
+        endif;
+    endif;
+endforeach;
+?>
+<?php if(count($valid_instructors) > 0): ?>
 <section class="h-3-expert-instructor h-3-courses wow animate__animated  animate__fadeInUp " data-wow-duration="1000" data-wow-delay="500">
     <div class="container">
         <div class="row">
@@ -646,14 +672,14 @@
             </div>
         </div>
         <div class="instructor-slider owl-carousel owl-theme">
-            <?php foreach($top_instructor_ids as $top_instructor_id):
-                $top_instructor = $this->user_model->get_all_user($top_instructor_id['creator'])->row_array();
+            <?php foreach($valid_instructors as $top_instructor):
                 $social_links  = json_decode($top_instructor['social_links'], true); ?>
                 <div class="h-3-expart-1">
                     <img loading="lazy" onclick="redirectTo('<?php echo site_url('home/instructor_page/'.$top_instructor['id']); ?>')" src="<?php echo $this->user_model->get_user_image_url($top_instructor['id']); ?>">
                     <div class="h-3-expart-1-text">
                         <h4 onclick="redirectTo('<?php echo site_url('home/instructor_page/'.$top_instructor['id']); ?>')"><?php echo $top_instructor['first_name'].' '.$top_instructor['last_name']; ?></h4>
                         <p class="ms-auto me-auto ellipsis-line-3" style="max-width: 200px;text-align: center;" onclick="redirectTo('<?php echo site_url('home/instructor_page/'.$top_instructor['id']); ?>')" class="ellipsis-line-2"><?php echo $top_instructor['title']; ?></p>
+                        <?php /* Hidden: Social Media Links
                         <div class="icon-div-2">
                             <?php if($social_links['facebook']): ?>
                                 <a class="" href="<?php echo $social_links['facebook']; ?>" target="_blank">
@@ -671,6 +697,7 @@
                                 </a>
                             <?php endif; ?>
                         </div>
+                        */ ?>
                     </div>
                 </div>
             <?php endforeach; ?>

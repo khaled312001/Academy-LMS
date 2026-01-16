@@ -206,7 +206,19 @@
         <div class="col-lg-3 col-md-4 col-sm-6">
           <a class="category-item" href="<?php echo site_url('home/courses?category='.$category_details['slug']); ?>">
             <div class="icon text-center" style="color: #754FFE;">
-              <i class="<?php echo $category_details['font_awesome_class']; ?>"></i>
+              <?php 
+              $icon_class = $category_details['font_awesome_class'];
+              if (!empty($icon_class)) {
+                  if (!preg_match('/^(fa[srbld]?|fa-)/', $icon_class)) {
+                      $icon_class = 'fa-solid fa-' . ltrim($icon_class, 'fa-');
+                  } elseif (preg_match('/^fa-[a-z]/', $icon_class)) {
+                      $icon_class = 'fa-solid ' . $icon_class;
+                  }
+              } else {
+                  $icon_class = 'fa-solid fa-folder';
+              }
+              ?>
+              <i class="<?php echo $icon_class; ?>"></i>
             </div>
             <h3 class="info">
               <?php echo $category_details['name']; ?>
@@ -422,8 +434,22 @@
 
 <?php if(get_frontend_settings('top_instructor_section') == 1): ?>
 <!-- Start Instructor -->
-<?php $top_instructor_ids = $this->crud_model->get_top_instructor(10); ?>
-<?php if(count($top_instructor_ids) > 0): ?>
+<?php 
+$top_instructor_ids = $this->crud_model->get_top_instructor(10); 
+// Filter out invalid instructors
+$valid_instructors = array();
+foreach($top_instructor_ids as $top_instructor_id):
+    $instructor_query = $this->user_model->get_all_user($top_instructor_id['creator']);
+    if($instructor_query->num_rows() > 0):
+        $top_instructor = $instructor_query->row_array();
+        // Check if instructor is valid and has required fields
+        if(!empty($top_instructor) && !empty($top_instructor['id']) && !empty($top_instructor['first_name'])):
+            $valid_instructors[] = $top_instructor;
+        endif;
+    endif;
+endforeach;
+?>
+<?php if(count($valid_instructors) > 0): ?>
 <section class="pb-110 eInstructor6 wow animate__animated  animate__fadeInUp " data-wow-duration="1000" data-wow-delay="500">
   <div class="container">
     <div class="row justify-content-center">
@@ -437,8 +463,7 @@
     </div>
     <!-- Items -->
     <div class="row">
-      <?php foreach($top_instructor_ids as $top_instructor_id):
-        $top_instructor = $this->user_model->get_all_user($top_instructor_id['creator'])->row_array();
+      <?php foreach($valid_instructors as $top_instructor):
         $social_links  = json_decode($top_instructor['social_links'], true); ?>
         <div class="col-lg-4 col-sm-6">
           <div class="instructor-item-6">
@@ -452,6 +477,7 @@
                 </h4>
                 <p class="subtitle ellipsis-line-2"><?php echo $top_instructor['title']; ?></p>
               </a>
+              <?php /* Hidden: Social Media Links
               <ul class="social">
                 <?php if($social_links['facebook']): ?>
                   <li>
@@ -475,6 +501,7 @@
                   </li>
                 <?php endif; ?>
               </ul>
+              */ ?>
             </div>
           </div>
         </div>

@@ -215,6 +215,7 @@ $total_students = $this->db->get('enrol')->num_rows();
                 <div class="instructor-right">
                     <div class="instructon-contact">
 
+                    	<?php /* Hidden: Phone Number
                     	<?php if(!empty($instructor_details['phone'])): ?>
 	                        <div class="instructon-icon">
 	                            <i class="fa-solid fa-phone"></i>
@@ -224,7 +225,9 @@ $total_students = $this->db->get('enrol')->num_rows();
 	                            </div>
 	                        </div>
 	                    <?php endif; ?>
+	                    */ ?>
 
+                        <?php /* Hidden: Email
                         <?php if(!empty($instructor_details['email'])): ?>
 	                        <div class="instructon-icon">
 	                            <i class="fa-solid fa-envelope"></i>
@@ -234,7 +237,9 @@ $total_students = $this->db->get('enrol')->num_rows();
 	                            </div>
 	                        </div>
 	                    <?php endif; ?>
+	                    */ ?>
 
+                        <?php /* Hidden: Address
                         <?php if(!empty($instructor_details['address'])): ?>
 	                        <div class="instructon-icon">
 	                            <i class="fa-solid fa-location-dot"></i>
@@ -244,7 +249,9 @@ $total_students = $this->db->get('enrol')->num_rows();
 	                            </div>
 	                        </div>
 	                    <?php endif; ?>
+	                    */ ?>
 
+	                    <?php /* Hidden: Social Media Links
 	                    <div class="row mt-4 justify-content-center">
 	                    	<div class="col-auto px-1">
 			                    <?php if($social_links['facebook']): ?>
@@ -295,12 +302,16 @@ $total_students = $this->db->get('enrol')->num_rows();
 		                        <?php endif; ?>
 		                    </div>
 		                </div>
+		                */ ?>
 
                     </div>
+                    <?php /* Hidden: Message Button
                     <div class="instructor-msg mb-2">
                         <button class="btn btn-primary" type="button" onclick="redirectTo('<?php echo site_url('home/my_messages?instructor_id='.$instructor_details['id']); ?>')"> <i class="fa-solid fa-envelope"></i> <?php echo get_phrase('Message') ?></button>
 						
                     </div>
+                    */ ?>
+					<?php /* Hidden: Follow Button
 					<?php 
                         $is_following = $this->user_model->is_following($instructor_id, $this->session->userdata('user_id')); 
                         $user_id = $this->session->userdata('user_id');
@@ -311,6 +322,7 @@ $total_students = $this->db->get('enrol')->num_rows();
 							<span  class="w-100 follow-btn  btn <?php echo ($is_following) ? 'btn-fill' : 'btn-primary'; ?> py-2 btn-sm"><?php echo ($is_following) ? get_phrase('Unfollow') : get_phrase('Follow'); ?></span>
 						</a>
 						<?php endif; ?>
+					*/ ?>
                            
 					
                 </div>
