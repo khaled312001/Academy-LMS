@@ -1387,8 +1387,8 @@ input{
   margin: 10px 0px !important;
 }
 .eCircle_parent {
-  right: auto;
-  left: 0;
+  right: auto !important;
+  left: 0 !important;
 }
 .ePosition {
   width: 90%;

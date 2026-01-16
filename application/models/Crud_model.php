@@ -3687,6 +3687,9 @@ class Crud_model extends CI_Model
     function get_installed_themes($dir = APPPATH . '/views/frontend')
     {
         $result = array();
+        if (!is_dir($dir)) {
+            return $result;
+        }
         $cdir = $files = preg_grep('/^([^.])/', scandir($dir));
         foreach ($cdir as $key => $value) {
             if (!in_array($value, array(".", ".."))) {
@@ -3701,6 +3704,9 @@ class Crud_model extends CI_Model
     function get_uninstalled_themes($dir = 'themes')
     {
         $result = array();
+        if (!is_dir($dir)) {
+            return $result;
+        }
         $cdir = $files = preg_grep('/^([^.])/', scandir($dir));
         foreach ($cdir as $key => $value) {
             if (!in_array($value, array(".", "..", ".DS_Store"))) {
