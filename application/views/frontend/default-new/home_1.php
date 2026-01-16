@@ -332,9 +332,36 @@
         </div>
         <div class="category-product mt-2 wow  animate__animated animate__fadeInUp opacityOnUp" data-wow-duration="1000" data-wow-delay="500">
             <div class="row justify-content-center">
-                <?php $top_10_categories = $this->crud_model->get_top_categories(12, 'sub_category_id'); ?>
-                <?php foreach($top_10_categories as $top_10_category): ?>
-                <?php $category_details = $this->crud_model->get_category_details_by_id($top_10_category['sub_category_id'])->row_array(); ?>
+                <?php 
+                // جلب الفئات من قاعدة البيانات مباشرة مثل صفحة /admin/categories
+                $all_categories = $this->crud_model->get_categories()->result_array();
+                $categories_with_courses = array();
+                
+                // جمع جميع الفئات الفرعية مع عدد الدورات لكل فئة
+                foreach($all_categories as $main_category):
+                    $sub_categories = $this->crud_model->get_sub_categories($main_category['id']);
+                    foreach($sub_categories as $sub_category):
+                        $course_count = $this->crud_model->get_category_wise_courses($sub_category['id'])->num_rows();
+                        if($course_count > 0):
+                            $categories_with_courses[] = array(
+                                'category' => $sub_category,
+                                'course_number' => $course_count
+                            );
+                        endif;
+                    endforeach;
+                endforeach;
+                
+                // ترتيب الفئات حسب عدد الدورات (من الأكثر إلى الأقل)
+                usort($categories_with_courses, function($a, $b) {
+                    return $b['course_number'] - $a['course_number'];
+                });
+                
+                // عرض أول 12 فئة
+                $categories_to_display = array_slice($categories_with_courses, 0, 12);
+                
+                foreach($categories_to_display as $category_data): 
+                    $category_details = $category_data['category'];
+                ?>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12 wow  animate__animated animate__fadeIn" data-wow-duration="1000" data-wow-delay="600">
                         <a href="<?php echo site_url('home/courses?category='.$category_details['slug']); ?>" class="category-product-body position-relative eCategory d-flex">
                         <?php
@@ -370,7 +397,7 @@
                             <!-- <span class="category-hide-icon"><i class="fa-solid fa-angle-right"></i></span> -->
                             <div class="eText">
                                  <h5 class="pt-0"> <?php echo $category_details['name']; ?></h5>
-                                 <p class="hide-cat-text"><?php echo $top_10_category['course_number'].' '.site_phrase('courses'); ?></p>
+                                 <p class="hide-cat-text"><?php echo $category_data['course_number'].' '.site_phrase('courses'); ?></p>
                             </div>
                          </a>
                     </div>
