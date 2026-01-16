@@ -53,7 +53,6 @@
 
                    <div class="eCircle_parent">
                        <div class="eCircle  animate__animated  animate__fadeInRightBig" data-wow-duration="1000" data-wow-delay="500">
-                            <span class="circleOne"><img src="<?php echo base_url("assets/frontend/default-new/image/circle1.png"); ?>" alt=""></span>
                             <span class="cirlceTwo"><img src="<?php echo base_url("assets/frontend/default-new/image/circle2.png"); ?>" alt=""></span>
                         </div>
                    </div>
