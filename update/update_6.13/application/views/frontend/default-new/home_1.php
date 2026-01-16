@@ -37,7 +37,7 @@
                     ?>
                 </h1>
                     <div class="EbannerTop  animate__animated  animate__fadeInUp opacityOnUp" data-wow-duration="1000" data-wow-delay="500">
-                       <p style="margin-top: 10px;"> <?php echo site_phrase(get_frontend_settings('banner_sub_title')); ?></p>
+                       <p style="margin-top: 50px; padding-top: 50px;"> <?php echo site_phrase(get_frontend_settings('banner_sub_title')); ?></p>
                        <div class="search-option mb-0">
                             <form action="<?php echo site_url('home/search'); ?>" method="get">
                                 <input class="form-control" type="text" placeholder="<?php echo get_phrase('What do you want to learn'); ?>" name="query">
